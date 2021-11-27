@@ -16,4 +16,6 @@ The pipeline accepts a number of parameters which can be changed in config_ctSim
 -template_vcf: VCF file listing the variants to be used for the simulation (do not need to be real cancer variants), the allele frequency is ignored as it is simulated (can be overwritten by adding F! (full, homozygous) or H! (half, heterozygous) to the third column) -->for umiVar, M has to be written in the third column so that all variants are monitored
 -variation: float, which initial variation to use for the simulation of allele frequency; will increase in the actual datasets because of RNG function calls; a value of at least 0.02 is recommended
 
-Additonal parameters can be used to modify the NEAT calls. All parameters are explained in the config file as well. A number of parameters are paths to reference genomes or external tools used by the pipeline
+Additonal parameters can be used to modify the NEAT calls. All parameters are explained in the config file as well. A number of parameters are paths to reference genomes or external tools used by the pipeline: This includes the path for NEAT, umiVar and the megSAP deduplication script (barcode_correction.py).
+
+Then, after activating the conda environment, the pipeline can be run from the scripts folder with `snakemake -j1`; replace 1 with any number of threads you want to provide for the execution.
