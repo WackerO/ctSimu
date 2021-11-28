@@ -1,6 +1,7 @@
 # ctSimu
 ## Snakemake pipeline for simulation of cancer patient data (FASTQ->BAM->VCF) with circulating tumor DNA (ctDNA)
 
+### About the pipeline/setup
 This pipeline was written in Snakemake, using own python scripts as well as NEAT, which has to be installed:
 
 https://github.com/zstephens/neat-genreads
@@ -40,4 +41,10 @@ The pipeline accepts a number of parameters which can be changed in `config_ctSi
 
 Additonal parameters can be used to modify the NEAT calls. All parameters are explained in the config file as well. A number of parameters are paths to reference genomes or external tools used by the pipeline: This includes the path for NEAT, umiVar and the megSAP deduplication script (`barcode_correction.py`); these paths are marked with * in the `config_ctSimu.yaml` comments.
 
+### Executing the pipeline
+
 Then, after activating the conda environment, the pipeline can be run from the scripts folder with `snakemake -j1`; replace 1 with any number of threads you want to provide for the execution.
+
+### Trend classification
+
+The classification of trends uses four parameters which were trained with `train_test_classification.py`. For training, just call the script with the call_vcfs folder as input: `python train_test_classification.py -f call_vcfs`. For testing parameters manually, additionally provide these parameters, e.g.: `python train_test_classification.py -f call_vcfs -p 14 4 1 1`. The first two parameters determine minimum values for deeming the difference between two AF medians high enough to qualify as actually different (i.e. the AF has fluctuated because of disease change, not just biological change). The last two parameters determine whether the slope string (a string description of the median line, e.g. uucd=up, up, constant, down) qualifies as not constant (and therefore up, down, delayed down or relapse).
