@@ -1,0 +1,27 @@
+name: ctSimu
+channels:
+  - conda-forge
+  - anaconda
+  - bioconda
+  - defaults
+dependencies:
+  - snakemake
+  - scipy
+  - pybedtools
+  - bioconductor-survcomp
+  - r-argparse
+  - r-bbmle
+  - r-data.table
+  - r-ggplot2
+  - r-gridextra
+  - r-seqinr
+  - r-vgam
+  - biopython
+  - matplotlib
+  - numpy
+  - pandas
+  - pysam
+  - samtools
+  - scipy
+  - lofreq
+  - pybedtools

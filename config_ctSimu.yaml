@@ -1,0 +1,49 @@
+patients: 5                                                                         #number of patients PER TREND to simulate
+trends: ['up', 'down', 'const', 'rel', 'delay']                                     #which trends to simulate
+timepoints: ['before', 'therapy1', 'therapy2', 'therapy3', 'after']                 #which timepoints to simulate (need to be implemented in simulate_development as well!)
+varcallers: ['vardict', 'lofreq', 'umivar']                                         #which of the variant callers to use
+
+template_vcf: "../input/template.vcf"                                               #the different progress VCFs are created from this file
+simulate_development: "python simulate_development.py"                              #simulation script for theoretical VCFs
+variation: 0.02                                                                     #variation for simulation script
+
+regions_bed: "../input/regions.bed"                                                 #BED file with target positions (genomic regions!)
+neat: "python /mnt/users/ahwacko1/neat/gen_reads.py"                                #*NEAT main script    
+neat_coverage: 15000                                                                #NEAT coverage to simulate
+neat_reference_sim: "/mnt/users/ahwacko1/reference_genome/GRCh37_fullsub.fa"        #*NEAT genome for simulation, can be subset of variant calling reference genome to speed NEAT up
+neat_read_length: 111                                                               #NEAT read length to simulate
+neat_pe: "272 15"                                                                   #NEAT paired-end fragment length mean and standard deviation
+neat_mut_rate: 0                                                                    #NEAT mutation rate
+neat_err_rate: 0                                                                    #NEAT sequencing error rate
+neat_offtarget: 0                                                                   #NEAT off-target coverage proportion
+
+umis: "../input/xGen_prism_UMIs.txt"                                                #bed file containing the relevant positions
+mix_cancer_reads: "python mix_cancer_reads.py"                                      #script for mixing healthy and tumor reads into patient datasets
+
+amplification: "python amplification.py"                                            #script for simple amplification
+multi: 24                                                                           #max. number of copies to write per read during amplification
+preerror: 0.001                                                                     #error rate before amplification (should stay during dedup)
+error: 0.0011128                                                                    #error rate after amplification (should be corrected during dedup)
+
+threads: 1                                                                          #number of threads PER PATIENT for multi-thread steps
+reference: "/mnt/users/ahwacko1/reference_genome/GRCh37.fa"                         #*reference genome for variant calling
+
+dedup: "python /mnt/users/bioinf/megSAP/src/NGS/barcode_correction.py"              #*dedup script from megSAP
+
+mappingQC: /mnt/share/opt/ngs-bits-current/MappingQC                                #*qual control (DELETE???????????????????????????????????????)    
+
+template_bed: "../input/template.bed"                                               #BED file with mutation sites (single bases!)
+
+lofreq: "lofreq call"                                                               #lofreq variant caller
+
+
+vcf_to_bed_extend: "python vcf_to_bed_extended.py"                                  #script for writing VCF to BED and extending positions (for umiVAR background model and LoFreq and VarDict)
+umivar: "python /mnt/users/ahwacko1/UMIVar2/umiVar2/umiVar.py"                      #umiVar variant caller; the following script is part of umiVar
+umi_file_name: "bwa_sorted_umis_dedup_monitoring.vcf"                               #name of umiVar output VCF to analyze further
+
+vardict: "/mnt/users/ahwacko1/tools/VarDictJava/VarDict/vardict"                    #VarDict variant caller; the following two scripts are part of VarDict
+teststrandbias: "/mnt/users/ahwacko1/tools/VarDictJava/VarDict/teststrandbias.R"
+var2vcf_valid: "/mnt/users/ahwacko1/tools/VarDictJava/VarDict/var2vcf_valid.pl"
+
+plot_AF: "../scripts/plot_AF.py"                                                    #script for producing line plots from the vcf files
+plot_ymax: 0.07                                                                     #y axis maximum for plots if enabled
