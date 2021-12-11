@@ -48,3 +48,13 @@ Then, after activating the conda environment, the pipeline can be run from the s
 ### Trend classification
 
 The classification of trends uses four parameters which were trained with `train_test_classification.py`. For training, just call the script with the call_vcfs folder as input: `python train_test_classification.py -f call_vcfs`. For testing parameters manually, additionally provide these parameters, e.g.: `python train_test_classification.py -f call_vcfs -p 14 4 1 1`. The first two parameters determine minimum values for deeming the difference between two AF medians high enough to qualify as actually different (i.e. the AF has fluctuated because of disease change, not just biological change). The last two parameters determine whether the slope string (a string description of the median line, e.g. uucd=up, up, constant, down) qualifies as not constant (and therefore up, down, delayed down or relapse).
+
+### Evaluation of variant calling
+
+Finally, vcf_compare_all.py can be used on the folder structure created by the pipeline to check the variant caller and find out how many variants were found/missed. The script requires two parameters:
+- `'-f', '--folder'`: folder containing simulated and true VCFs (call_vcfs in the current implementation)
+- `'-v', '--varcallers'`: list of string of variant callers to consider -->the names have to conform to the name used in naming the VCF files, e.g. when in call_vcfs, there are files called umivar.vcf, then umivar would be the correct parameter
+
+An example output will then be:
+
+`In 125 files, umivar called 3637 variants out of 3850 true variants. 3612 calls were true positives (99.312620291449 %) and 25 were false positives (0.6873797085510036 %), also 238 true variants were not called (false negatives, 6.543854825405554 %). Sensitivity: 0.9381818181818182, precision: 0.9931262029144899`
